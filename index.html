@@ -79,19 +79,27 @@
   .door{position:absolute;left:120px;top:528px;width:120px;height:88px;z-index:2}
   .door svg{width:100%;height:100%;display:block;overflow:visible}
   #boss{position:absolute;left:55px;top:-22px;width:250px;height:156px;z-index:5;
-    transition:transform .18s ease;transform-origin:50% 80%}
+    transition:transform .22s ease;transform-origin:50% 80%}
   #ripple{position:absolute;top:64px;width:120px;height:120px;opacity:0;z-index:6;transition:opacity .2s}
   #ripple.show{opacity:.85;animation:rip 1s ease-in-out infinite alternate}
   @keyframes rip{0%{transform:scale(.8);opacity:.55}100%{transform:scale(1.08);opacity:.95}}
-  #gaze{position:absolute;top:130px;height:418px;left:122px;width:238px;opacity:0;
-    background:linear-gradient(180deg, rgba(33,30,26,.32), rgba(33,30,26,.06) 62%, rgba(33,30,26,0));
-    transition:opacity .1s linear;pointer-events:none;z-index:3}
+  #gaze{position:absolute;top:130px;left:0;width:360px;height:418px;opacity:0;
+    background:linear-gradient(180deg, rgba(33,30,26,.54), rgba(33,30,26,.28) 58%, rgba(33,30,26,.13));
+    clip-path:polygon(59% 0,100% 0,100% 100%,68% 100%);
+    transition:opacity .16s linear;pointer-events:none;z-index:3}
+  #gaze.left{clip-path:polygon(41% 0,0 0,0 100%,32% 100%)}
+  #gaze.pre{opacity:.36}
   #gaze.show{opacity:1}
+  #warnMark{position:absolute;top:4px;left:228px;z-index:7;opacity:0;transform:translateY(7px);
+    font-size:15px;letter-spacing:2px;color:var(--ink);background:rgba(246,241,228,.94);
+    border:1px solid rgba(33,30,26,.4);border-radius:13px 13px 13px 3px;padding:3px 9px;
+    transition:opacity .18s,transform .18s;pointer-events:none}
+  #warnMark.show{opacity:1;transform:translateY(0)}
   #player{position:absolute;left:0;top:0;width:46px;height:46px;z-index:8;will-change:transform}
   #player svg{width:100%;height:100%;display:block;overflow:visible;
     filter:drop-shadow(0 4px 4px rgba(33,30,26,.18))}
   #dangerVig{position:absolute;inset:0;pointer-events:none;z-index:4;opacity:0;
-    box-shadow:inset 0 0 70px 26px rgba(33,30,26,.35);transition:opacity .12s}
+    box-shadow:inset 0 0 90px 34px rgba(181,74,51,.38);transition:opacity .12s}
   #dangerVig.show{opacity:1;animation:vig .5s ease-in-out infinite alternate}
   @keyframes vig{from{opacity:.55}to{opacity:1}}
 
@@ -196,7 +204,15 @@
     <div class="door"><svg viewBox="0 0 200 160"><use href="#exit-door"/></svg></div>
 
     <div id="gaze"></div>
-    <svg id="boss" viewBox="0 0 240 150"><use href="#boss-peek"/></svg>
+    <svg id="boss" viewBox="0 0 240 150"><use id="bossUse" href="#boss-back"/>
+      <g id="bossEyes" opacity="0">
+        <circle cx="140" cy="57" r="5" fill="#FFFDF4" fill-opacity=".92"/>
+        <circle cx="164" cy="57" r="5" fill="#FFFDF4" fill-opacity=".92"/>
+        <circle id="pupilL" cx="140" cy="57" r="2.9" fill="#211E1A"/>
+        <circle id="pupilR" cx="164" cy="57" r="2.9" fill="#211E1A"/>
+      </g>
+    </svg>
+    <div id="warnMark">嗯？</div>
     <svg id="ripple" viewBox="0 0 120 120"><use href="#ripple-ink"/></svg>
     <div id="dangerVig"></div>
 
@@ -378,6 +394,22 @@
     <path d="M155 62q3 5-1 7" fill="none" stroke="#6B635A" stroke-width="1.4" stroke-linecap="round"/>
     <path d="M143 78q11 3 20 0" fill="none" stroke="#211E1A" stroke-width="1.8" stroke-linecap="round"/>
     <path d="M130 86q20 9 42 0" fill="none" stroke="#9C9488" stroke-width="1.4" opacity=".8"/>
+  </g>
+  <rect x="0" y="104" width="240" height="46" fill="#E7DFCC" stroke="#211E1A" stroke-width="2.4"/>
+  <path d="M0 104h240" stroke="#9C9488" stroke-width="5"/>
+  <ellipse cx="126" cy="103" rx="12" ry="7" fill="#E4C09B" stroke="#211E1A" stroke-width="1.8"/>
+  <ellipse cx="182" cy="103" rx="12" ry="7" fill="#E4C09B" stroke="#211E1A" stroke-width="1.8"/>
+</symbol>
+
+<symbol id="boss-back" viewBox="0 0 240 150">
+  <g filter="url(#rough-s)">
+    <path d="M64 118q-4-40 38-50 30-8 56 4 20 10 20 46v30H64z" fill="#3A3530" stroke="#211E1A" stroke-width="2.4"/>
+    <path d="M124 88q28-14 56 0M132 76l-8 40M172 76l8 40" fill="none" stroke="#211E1A" stroke-width="1.2" opacity=".45"/>
+    <ellipse cx="120" cy="60" rx="6" ry="9" fill="#E4C09B" stroke="#211E1A" stroke-width="2.2"/>
+    <ellipse cx="184" cy="60" rx="6" ry="9" fill="#E4C09B" stroke="#211E1A" stroke-width="2.2"/>
+    <ellipse cx="152" cy="58" rx="32" ry="32" fill="#2C2823" stroke="#211E1A" stroke-width="2.6"/>
+    <path d="M122 54q10-26 58-8M126 68q18-14 50-3M134 44q14 10 9 30M171 40q-5 16 2 30" fill="none" stroke="#4A443C" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M152 89q-7 5-15 5" fill="none" stroke="#211E1A" stroke-width="1.6" opacity=".45"/>
   </g>
   <rect x="0" y="104" width="240" height="46" fill="#E7DFCC" stroke="#211E1A" stroke-width="2.4"/>
   <path d="M0 104h240" stroke="#9C9488" stroke-width="5"/>
@@ -652,6 +684,9 @@
   var wall=document.getElementById('wall'), game=document.getElementById('game'),
       stage=document.getElementById('stage'), playerEl=document.getElementById('player'),
       bossEl=document.getElementById('boss'), rippleEl=document.getElementById('ripple'),
+      bossUse=document.getElementById('bossUse'), bossEyes=document.getElementById('bossEyes'),
+      pupilL=document.getElementById('pupilL'), pupilR=document.getElementById('pupilR'),
+      warnMark=document.getElementById('warnMark'),
       gazeEl=document.getElementById('gaze'), vigEl=document.getElementById('dangerVig'),
       timeText=document.getElementById('timeText'), tipEl=document.getElementById('stateTip'),
       intro=document.getElementById('intro'), result=document.getElementById('result'),
@@ -740,9 +775,10 @@
   /* ---------- 开局 ---------- */
   function resetRound(){
     p.x=180; p.y=176;
-    boss.state='back'; boss.timer=0.9; boss.dir=1; boss.lastDir=0;
+    boss.state='back'; boss.timer=1.2; boss.dir=1; boss.lastDir=0;
     timeLeft=TIME_LIMIT; dangerT=0; target=null; keys.left=keys.right=keys.up=keys.down=false;
-    gazeEl.classList.remove('show'); rippleEl.classList.remove('show');
+    gazeEl.classList.remove('show','pre','left');
+    rippleEl.classList.remove('show'); warnMark.classList.remove('show');
     vigEl.classList.remove('show');
     tipEl.className='statetip';
     tipEl.textContent='老板背对，可以走';
@@ -802,27 +838,33 @@
   /* ---------- 老板 ---------- */
   function setBoss(state){
     boss.state=state;
-    if(state==='back') boss.timer=1.35+Math.random()*0.45;
+    if(state==='back') boss.timer=1.55+Math.random()*0.5;
     if(state==='warn'){
-      boss.timer=0.9;
+      boss.timer=1.2;
       var d=Math.random()<0.5?-1:1;
       if(d===boss.lastDir&&Math.random()<0.65) d=-d;
       boss.dir=d; boss.lastDir=d;
     }
-    if(state==='peek') boss.timer=1.45;
+    if(state==='peek') boss.timer=1.2;
     if(state==='recover') boss.timer=0.35;
     applyBossVisual();
   }
   function applyBossVisual(){
-    var lean=(boss.state==='warn'||boss.state==='peek')?boss.dir*9:0;
-    bossEl.style.transform='translateX('+lean+'px) rotate('+(lean*0.25)+'deg)';
+    var alert=boss.state==='warn'||boss.state==='peek';
+    var lean=alert?boss.dir*17:0;
+    bossEl.style.transform='translateX('+lean+'px) rotate('+(alert?boss.dir*3.4:0)+'deg)';
+    bossUse.setAttribute('href',alert?'#boss-peek':'#boss-back');
+    bossEyes.setAttribute('opacity',alert?'1':'0');
+    var dx=boss.dir*4.5;
+    pupilL.setAttribute('cx',140+dx); pupilR.setAttribute('cx',164+dx);
     var lookingRight=boss.dir>0;
-    gazeEl.style.left=lookingRight?'122px':'0px';
-    gazeEl.style.width='238px';
-    rippleEl.style.left=lookingRight?'236px':'4px';
-    if(boss.state==='warn') rippleEl.classList.add('show');
-    else rippleEl.classList.remove('show');
+    gazeEl.classList.toggle('left',!lookingRight);
     gazeEl.classList.toggle('show',boss.state==='peek');
+    gazeEl.classList.toggle('pre',boss.state==='warn');
+    rippleEl.style.left=lookingRight?'236px':'4px';
+    rippleEl.classList.toggle('show',boss.state==='warn');
+    warnMark.style.left=lookingRight?'122px':'246px';
+    warnMark.classList.toggle('show',boss.state==='warn');
   }
 
   /* ---------- 判定 ---------- */
@@ -886,7 +928,7 @@
     if(boss.state==='peek'&&!inSafeSlot()) dangerT+=dt; else dangerT=0;
 
     if(p.y>=566){ win(); return; }
-    if(dangerT>0.16&&boss.state==='peek'){ lose('被发现了','老板探头：「这么早就走？」'); return; }
+    if(dangerT>0.28&&boss.state==='peek'){ lose('被发现了','老板探头：「这么早就走？」'); return; }
 
     render();
   }
@@ -899,10 +941,10 @@
 
     if(boss.state==='peek'){
       if(inSafeSlot()){ tipEl.className='statetip safe'; tipEl.textContent='藏好了，别动'; }
-      else { tipEl.className='statetip bad'; tipEl.textContent='暴露了！快躲'; }
+      else { tipEl.className='statetip bad'; tipEl.textContent='暴露了！快躲'+(boss.dir>0?'左':'右'); }
     }else if(boss.state==='warn'){
       tipEl.className='statetip bad';
-      tipEl.textContent='老板要往'+(boss.dir>0?'右':'左')+'看了';
+      tipEl.textContent='老板要往'+(boss.dir>0?'右':'左')+'看 · 躲'+(boss.dir>0?'左':'右')+'边';
     }else if(boss.state==='recover'){
       tipEl.className='statetip'; tipEl.textContent='缩回去了…';
     }else{
